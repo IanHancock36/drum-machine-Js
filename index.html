@@ -54,7 +54,10 @@
   <audio data-key="75" src="Samples/tom-808.wav"></audio>
   <audio data-key="76" src="Samples/cowbell-808.wav"></audio>
 <script>
-    window.addEventListener
+    window.addEventListener('keydown',function(e){
+      const audio = document.querySelector(`audio[data-key ="${e.keyCode}"]`)
+      console.log(audio)
+    })
 </script>
     
     
@@ -80,10 +83,17 @@ class = "sound" is for Css styling <span> an inline container used to
  key which is the "A" on the keyboard associated with that key on the keyboard. 
 
 
- #5 window.addEventListener(keydown)
+ #5 window.addEventListener('keydown',function(e){
+      const audio = document.querySelector(`audio[data-key ="${e.keyCode}"]`)
+ addEventListener "keydown" is what the listener is waiting for. 
 
 
+ *inside it you use a template literal Tl's allow for imbedding information `${}` this setup will evaluate to something.
+ 
+ * attribute selector is used for 
 
+* .keyCode = returns the unicode characture code of the key that triggered the onkeypress
+event. basically the key you hit that causes a event. 
 -->
 
 
