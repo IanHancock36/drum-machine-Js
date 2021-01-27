@@ -1,71 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Js Drum Kit Project</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel= "stylesheet" href="styles.css"
-</head>
-<body>   <div class="keys">
-    <div data-key="65" class="key">
-      <kbd>A</kbd>
-      <span class="sound">clap</span>
+  </head>
+  <body>
+    <div class="keys">
+      <div data-key="65" class="key">
+        <kbd>A</kbd>
+        <span class="sound">clap</span>
+      </div>
+      <div data-key="83" class="key">
+        <kbd>S</kbd>
+        <span class="sound">hihat</span>
+      </div>
+      <div data-key="68" class="key">
+        <kbd>D</kbd>
+        <span class="sound">kick</span>
+      </div>
+      <div data-key="70" class="key">
+        <kbd>F</kbd>
+        <span class="sound">openhat</span>
+      </div>
+      <div data-key="71" class="key">
+        <kbd>G</kbd>
+        <span class="sound">boom</span>
+      </div>
+      <div data-key="72" class="key">
+        <kbd>H</kbd>
+        <span class="sound">ride</span>
+      </div>
+      <div data-key="74" class="key">
+        <kbd>J</kbd>
+        <span class="sound">snare</span>
+      </div>
+      <div data-key="75" class="key">
+        <kbd>K</kbd>
+        <span class="sound">tom</span>
+      </div>
+      <div data-key="76" class="key">
+        <kbd>L</kbd>
+        <span class="sound">tink</span>
+      </div>
     </div>
-    <div data-key="83" class="key">
-      <kbd>S</kbd>
-      <span class="sound">hihat</span>
-    </div>
-    <div data-key="68" class="key">
-      <kbd>D</kbd>
-      <span class="sound">kick</span>
-    </div>
-    <div data-key="70" class="key">
-      <kbd>F</kbd>
-      <span class="sound">openhat</span>
-    </div>
-    <div data-key="71" class="key">
-      <kbd>G</kbd>
-      <span class="sound">boom</span>
-    </div>
-    <div data-key="72" class="key">
-      <kbd>H</kbd>
-      <span class="sound">ride</span>
-    </div>
-    <div data-key="74" class="key">
-      <kbd>J</kbd>
-      <span class="sound">snare</span>
-    </div>
-    <div data-key="75" class="key">
-      <kbd>K</kbd>
-      <span class="sound">tom</span>
-    </div>
-    <div data-key="76" class="key">
-      <kbd>L</kbd>
-      <span class="sound">tink</span>
-    </div>
-  </div>
-  <audio data-key="65" src= "Samples/clap-slapper.wav"></audio> 
-  <audio data-key="83" src="Samples/hihat-808.wav"></audio> 
-  <audio data-key="68" src="Samples/kick-808.wav" ></audio>
-  <audio data-key="70" src="Samples/openhat-808.wav"></audio>
-  <audio data-key="71" src="Samples/perc-weirdo.wav"></audio>
-  <audio data-key="72" src="Samples/ride-acoustic02.wav"></audio>
-  <audio data-key="74" src="Samples/snare-big.wav"></audio>
-  <audio data-key="75" src="Samples/tom-808.wav"></audio>
-  <audio data-key="76" src="Samples/cowbell-808.wav"></audio>
-<script>
-    window.addEventListener('keydown',function(e){
-      const audio = document.querySelector(`audio[data-key ="${e.keyCode}"]`)
-      console.log(audio)
-    })
-</script>
+    <audio data-key="65" src="Samples/clap-slapper.wav"></audio>
+    <audio data-key="83" src="Samples/hihat-808.wav"></audio>
+    <audio data-key="68" src="Samples/kick-808.wav"></audio>
+    <audio data-key="70" src="Samples/openhat-808.wav"></audio>
+    <audio data-key="71" src="Samples/perc-weirdo.wav"></audio>
+    <audio data-key="72" src="Samples/ride-acoustic02.wav"></audio>
+    <audio data-key="74" src="Samples/snare-big.wav"></audio>
+    <audio data-key="75" src="Samples/tom-808.wav"></audio>
+    <audio data-key="76" src="Samples/cowbell-808.wav"></audio>
     
-    
-</body>
+    <script>
+       function playSound (e){
+        const audio = document.querySelector(`audio[data-key ="${e.keyCode}"]`);
+        const key = document.querySelector(`.key[data-key ="${e.keyCode}"]`); // this selects the indidual class of the key code numbers that are associated with the keyboard.
+        if (!audio) return; // this means if key is hit that no audio is associated stops the function from happening.
+        audio.currentTime = 0; // this will rewind to the start
+        audio.play();
+        key.classList.add('playing') // this selects the class of playing in css this adds this to the function and adds the css style so when this fires off it has an animation to it. 
+      };
+
+      function removeTransition(e){
+        if (e.propertyName !== 'transform') return; // skip it if its not a transformation 
+       this.classList.remove('playing')
+      
+      }
+      const keys = document.querySelectorAll('.key') // this gives us an array of everthing that is matched. which is all the buttons on the key board that have an key associated with them 
+      keys.forEach(key => key.addEventListener('transitionend', removeTransition))
+      window.addEventListener("keydown", playSound)
+    </script>
+  </body>
 </html>
-
-
-
 
 <!-- NOTES
 #1 
@@ -89,12 +99,23 @@ class = "sound" is for Css styling <span> an inline container used to
 
 
  *inside it you use a template literal Tl's allow for imbedding information `${}` this setup will evaluate to something.
- 
+
  * attribute selector is used for 
 
 * .keyCode = returns the unicode characture code of the key that triggered the onkeypress
 event. basically the key you hit that causes a event. 
+
+
+if(!audio) return  & audio.play() this means if you hit a key that doesn't have audio
+associated with the specific key it will stop the function. and if it does have audio
+associated with a key it will play the audio. the (!audio) means "not audio"
+
+Cool trick. if you are trying to figure out what "this" is inside a fucntion
+console log "this"
+
+$$$$$$$$$ TO DO's 
+$ Watch vid on eventlisteners 
+$ Watch Vid on classlist.add 
+
+
 -->
-
-
-
