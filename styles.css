@@ -34,8 +34,8 @@ html {
   
   .playing {
     transform: scale(1.1);
-    border-color: #ffc600;
-    box-shadow: 0 0 1rem #ffc600;
+    border-color: lime;
+    box-shadow: 0 0 1rem lime;
   }
   
   kbd {
@@ -47,5 +47,23 @@ html {
     font-size: 1.2rem;
     text-transform: uppercase;
     letter-spacing: .1rem;
-    color: #ffc600;
+    color:lime;
   }
+
+  /* 
+  $$$$ CSS NOTES $$$$$$$
+   background-size: cover = Scales the image as large as possible to fill the container, stretching the image if necessary.
+
+  margin - Sets all the margin properties in one declaration properties are used to create space around elements, outside of any defined borders.
+  
+  padding - A shorthand property for all the padding-* properties An element's padding is the space between its content and its border.
+  
+  display : flex = Displays an element as a block-level flex container
+
+   min- height Sets the minimum height of an element 
+  
+   Specifies the alignment between the items inside a flexible container when the items do not use all available space
+  
+   100vh = height: 100vh; means the height of this element is equal to 100% of the viewport height. example: height: 50vh; If your screen height is 1000px, your element height will be equal to 500px (50% of 1000px).
+  
+   */
